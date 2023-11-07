@@ -19,6 +19,9 @@ export const schema = gql`
     capacity: Int
     createdAt: DateTime!
     updatedAt: DateTime!
+    sessions: [EventSession]
+    speakers: [EventSpeaker]
+    registrants: [EventRegistrant]
   }
 
   enum EventVenueType {

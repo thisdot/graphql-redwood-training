@@ -68,21 +68,22 @@ model EventRegistrant {
 }
 
 model EventSession {
-  id          String            @id @default(uuid())
+  id             String            @id @default(uuid())
   // key public metadata
-  name        String
-  description String?
-  startAt     DateTime
-  endAt       DateTime
-  capacity    Int?
+  name           String
+  description    String?
+  startAt        DateTime
+  endAt          DateTime
+  capacity       Int?
   // general timestamps
-  createdAt   DateTime          @default(now())
-  updatedAt   DateTime          @default(now()) @updatedAt
+  createdAt      DateTime          @default(now())
+  updatedAt      DateTime          @default(now()) @updatedAt
   // relationships
-  event       Event             @relation(fields: [eventId], references: [id])
-  eventId     String
-  speakers    EventSpeaker[]
-  registrants EventRegistrant[]
+  event          Event             @relation(fields: [eventId], references: [id])
+  eventId        String
+  speaker        EventSpeaker?     @relation(fields: [eventSpeakerId], references: [id])
+  eventSpeakerId String?
+  registrants    EventRegistrant[]
 }
 
 model EventSpeaker {

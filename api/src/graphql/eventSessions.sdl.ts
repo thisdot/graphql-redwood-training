@@ -10,6 +10,9 @@ export const schema = gql`
     updatedAt: DateTime!
     event: Event!
     eventId: String!
+    eventSpeakerId: String
+    speaker: EventSpeaker
+    registrants: [EventRegistrant]
   }
 
   type Query {

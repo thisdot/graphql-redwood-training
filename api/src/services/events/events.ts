@@ -33,3 +33,15 @@ export const deleteEvent: MutationResolvers['deleteEvent'] = ({ id }) => {
     where: { id },
   });
 };
+
+export const Event = {
+  sessions: (_obj, { root }) => {
+    return db.event.findUnique({ where: { id: root?.id } }).sessions();
+  },
+  speakers: (_obj, { root }) => {
+    return db.event.findUnique({ where: { id: root?.id } }).speakers();
+  },
+  registrants: (_obj, { root }) => {
+    return db.event.findUnique({ where: { id: root?.id } }).registrants();
+  },
+};

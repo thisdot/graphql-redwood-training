@@ -3,9 +3,9 @@ import type {
   EventRegistrant,
   EventSession,
   EventSpeaker,
-} from '@prisma/client'
-import { EventVenueType } from '@prisma/client'
-import { db } from 'api/src/lib/db'
+} from '@prisma/client';
+import { EventVenueType } from '@prisma/client';
+import { db } from 'api/src/lib/db';
 
 const EVENTS: Event[] = [
   {
@@ -162,7 +162,7 @@ const EVENTS: Event[] = [
     createdAt: new Date('November 1, 2022 08:00:00'),
     updatedAt: new Date(),
   },
-]
+];
 
 const ATTENDEES: EventRegistrant[] = [
   {
@@ -244,7 +244,7 @@ const ATTENDEES: EventRegistrant[] = [
     cancelledAt: null,
     checkedInAt: null,
   },
-]
+];
 
 const SPEAKERS: EventSpeaker[] = [
   {
@@ -298,7 +298,7 @@ const SPEAKERS: EventSpeaker[] = [
     createdAt: new Date('May 15, 2024 13:00:00'),
     updatedAt: new Date(),
   },
-]
+];
 
 const SESSIONS: EventSession[] = [
   {
@@ -312,6 +312,7 @@ const SESSIONS: EventSession[] = [
     capacity: null,
     createdAt: new Date('May 15, 2024 13:00:00'),
     updatedAt: new Date(),
+    eventSpeakerId: '85f244a6-fcf6-499a-bdc7-bd6e1344c987',
   },
   {
     id: '85c0b781-2e1d-4f0a-932e-05bd764fb45d',
@@ -324,6 +325,7 @@ const SESSIONS: EventSession[] = [
     capacity: null,
     createdAt: new Date('May 15, 2024 13:00:00'),
     updatedAt: new Date(),
+    eventSpeakerId: 'a3930996-afc4-480c-acc5-b1a820ec4fda',
   },
   {
     id: 'ba895dd6-4e49-4c0e-856e-6ea8fa8ed54a',
@@ -336,6 +338,7 @@ const SESSIONS: EventSession[] = [
     capacity: null,
     createdAt: new Date('May 15, 2024 13:00:00'),
     updatedAt: new Date(),
+    eventSpeakerId: 'e2bb9f54-5ed5-487d-8e67-745ed1e725c8',
   },
   {
     id: '72ebe0af-27f9-4873-afb5-3dd76c95b2ba',
@@ -348,59 +351,31 @@ const SESSIONS: EventSession[] = [
     capacity: null,
     createdAt: new Date('May 15, 2024 13:00:00'),
     updatedAt: new Date(),
+    eventSpeakerId: 'e2bb9f54-5ed5-487d-8e67-745ed1e725c8',
   },
-]
-
-const SESSION_SPEAKER_MAP: { sessionId: string; speakerId: string }[] = [
-  {
-    sessionId: '0b640391-5a8e-4c1c-8136-7c4a881c9383',
-    speakerId: '85f244a6-fcf6-499a-bdc7-bd6e1344c987',
-  },
-  {
-    sessionId: '85c0b781-2e1d-4f0a-932e-05bd764fb45d',
-    speakerId: 'a3930996-afc4-480c-acc5-b1a820ec4fda',
-  },
-  {
-    sessionId: 'ba895dd6-4e49-4c0e-856e-6ea8fa8ed54a',
-    speakerId: 'e2bb9f54-5ed5-487d-8e67-745ed1e725c8',
-  },
-  {
-    sessionId: '72ebe0af-27f9-4873-afb5-3dd76c95b2ba',
-    speakerId: 'e2bb9f54-5ed5-487d-8e67-745ed1e725c8',
-  },
-]
-
+];
 export default async () => {
   try {
-    console.log('Seeding Events...')
+    console.log('Seeding Events...');
     await db.event.createMany({
       data: EVENTS,
-    })
+    });
 
-    console.log('Seeding Attendees...')
+    console.log('Seeding Attendees...');
     await db.eventRegistrant.createMany({
       data: ATTENDEES,
-    })
+    });
 
-    console.log('Seeding Speakers...')
+    console.log('Seeding Speakers...');
     await db.eventSpeaker.createMany({
       data: SPEAKERS,
-    })
+    });
 
-    console.log('Seeding Sessions...')
+    console.log('Seeding Sessions...');
     await db.eventSession.createMany({
       data: SESSIONS,
-    })
-
-    console.log('Connect Sessions & Speakers...')
-    for (const ids of SESSION_SPEAKER_MAP) {
-      const { sessionId, speakerId } = ids
-      await db.eventSession.update({
-        where: { id: sessionId },
-        data: { speakers: { connect: { id: speakerId } } },
-      })
-    }
+    });
   } catch (error) {
-    console.error(error)
+    console.error(error);
   }
-}
+};

@@ -46,4 +46,12 @@ export const EventSession: EventSessionRelationResolvers = {
   event: (_obj, { root }) => {
     return db.eventSession.findUnique({ where: { id: root?.id } }).event();
   },
+  speaker: (_obj, { root }) => {
+    return db.eventSpeaker.findUnique({ where: { id: root?.eventSpeakerId } });
+  },
+  registrants: (_obj, { root }) => {
+    return db.eventSession
+      .findUnique({ where: { id: root?.id } })
+      .registrants();
+  },
 };
