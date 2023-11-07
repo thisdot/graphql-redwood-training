@@ -12,10 +12,7 @@ const EventCard: FC<EventCardProps> = ({ id }) => {
     gql`
       query FindEventById($id: String!) {
         event(id: $id) {
-          id
-          name
-          description
-          startAt
+          ...EventCardFragment
         }
       }
     `,
