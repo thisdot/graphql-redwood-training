@@ -9,10 +9,8 @@ export const QUERY = gql`
   query FindEvents {
     events {
       id
-      name
-      description
+      ...EventCardFragment
       timezone
-      startAt
       endAt
       venueType
       venueName
